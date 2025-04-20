@@ -1,0 +1,123 @@
+{% extends 'portfolio_app/base.html' %}
+
+{% block content %}
+
+<!-- Page Background -->
+<div class="min-vh-100 bg-futuristic d-flex flex-column align-items-center justify-content-center">
+  <!-- Heading Bar -->
+  <header class="w-100 text-center py-4 mb-5 rounded-bottom shadow-lg" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+    <h1 class="display-4 fw-bold text-white">{{ profile.name }}</h1>
+    <p class="lead text-light">{{ profile.tagline }}</p>
+  </header>
+
+  <!-- Introduction -->
+  <div class="text-center mb-5">
+    <img src="{{ profile.photo.url }}" 
+         class="rounded-circle shadow-lg tilt-effect border border-3 border-primary" 
+         width="150" 
+         alt="Profile photo">
+
+    <p class="fs-6 text-light mt-3">{{ profile.bio }}</p>
+  </div>
+
+  <!-- Sections Grid -->
+  <div class="container-fluid px-4">
+    <div class="row gx-4 gy-4">
+      <!-- Education -->
+      <div class="col-md-6">
+        <div class="card card-hover-futuristic rounded-4 overflow-hidden">
+            <div class="card-header bg-gradient text-black fw-bold fst-italic rounded-top-4 d-flex justify-content-center align-items-center">
+                <i class="bi bi-mortarboard me-2"></i> Education
+          </div>
+          <div class="card-body p-4">
+            {% for edu in education_list %}
+              <h5>{{ edu.institution }}</h5>
+              <p class="mb-1">{{ edu.degree }} ({{ edu.start_year }} - {{ edu.end_year|default:'Present' }})</p>
+              <p class="text-muted">{{ edu.details }}</p>
+              <hr>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Soft Skills -->
+      <div class="col-md-6">
+        <div class="card card-hover-futuristic rounded-4 overflow-hidden">
+            <div class="card-header bg-gradient text-black fw-bold fst-italic rounded-top-4 d-flex justify-content-center align-items-center">
+                <i class="bi bi-people me-2"></i> Soft Skills
+          </div>
+          <div class="card-body p-4 d-flex flex-wrap gap-2">
+            {% for skill in soft_skills %}
+              <span class="badge bg-light text-dark rounded-pill">{{ skill.name }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Skills -->
+      <div class="col-md-6">
+        <div class="card card-hover-futuristic rounded-4 overflow-hidden">
+            <div class="card-header bg-gradient text-black fw-bold fst-italic rounded-top-4 d-flex justify-content-center align-items-center">
+                <i class="bi bi-code-slash me-2"></i> Tech Skills
+          </div>
+          <div class="card-body p-4">
+            {% for tech in tech_skills %}
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span>{{ tech.name }}</span>
+                  <span>{{ tech.proficiency }}%</span>
+                </div>
+                <div class="progress rounded-pill">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                       role="progressbar" 
+                       style="width: {{ tech.proficiency }}%; background-color: var(--bs-primary);"></div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="col-md-6">
+        <div class="card card-hover-futuristic rounded-4 overflow-hidden">
+            <div class="card-header bg-gradient text-black fw-bold fst-italic rounded-top-4 d-flex justify-content-center align-items-center">
+                <i class="bi bi-briefcase me-2"></i> Projects
+          </div>
+          <div class="card-body p-4">
+            {% for proj in projects %}
+              <h5><a href="{{ proj.link }}" class="text-decoration-none text-primary fw-semibold" target="_blank">{{ proj.title }}</a></h5>
+              <p>{{ proj.description }}</p>
+              <small class="text-muted">Completed: {{ proj.completed_date }}</small>
+              <hr>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="col-md-6">
+        <div class="card card-hover-futuristic rounded-4 overflow-hidden">
+            <div class="card-header bg-gradient text-black fw-bold fst-italic rounded-top-4 d-flex justify-content-center align-items-center">
+                <i class="bi bi-award me-2"></i> Certifications
+          </div>
+          <div class="card-body p-4">
+            {% for cert in certifications %}
+              <h6>{{ cert.title }}</h6>
+              <p class="mb-1">{{ cert.issuer }} &middot; {{ cert.date_obtained }}</p>
+              {% if cert.credential_url %}
+              <a href="{{ cert.credential_url }}" 
+                class="btn btn-sm btn-futuristic rounded-pill px-4 py-2 shadow-sm" 
+                target="_blank">
+                <i class="bi bi-eye-fill me-2"></i> View Credential
+              </a>             
+           {% endif %}
+              <hr>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
